@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyMusicBuddy</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="theme-blue">
+    <main class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">MyMusicBuddy</p>
+          <h1>Music units, playlists, import, and playback control.</h1>
+          <p class="subhead">Create your own library, adjust metadata, set volume, and choose play order.</p>
+        </div>
+        <nav class="tabs" role="tablist">
+          <button type="button" class="tab-button active" data-view="library">Library</button>
+          <button type="button" class="tab-button" data-view="playlists">Playlists</button>
+          <button type="button" class="tab-button" data-view="import">Import</button>
+          <button type="button" class="tab-button" data-view="settings">Settings</button>
+        </nav>
+      </header>
+
+      <div id="status" class="status" aria-live="polite"></div>
+
+      <section id="library-view" class="view active">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Library</p>
+            <h2>Saved music units</h2>
+          </div>
+          <button id="refresh-library" class="secondary" type="button">Refresh library</button>
+        </div>
+
+        <div id="library-list" class="card-grid"></div>
+      </section>
+
+      <section id="playlists-view" class="view">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Playlists</p>
+            <h2>Your playlist collections</h2>
+          </div>
+        </div>
+
+        <section class="panel">
+          <form id="playlist-form" class="stack-form">
+            <div class="form-row">
+              <label for="playlist-name">Name</label>
+              <input id="playlist-name" name="name" type="text" placeholder="Playlist name" required />
+            </div>
+            <div class="form-row">
+              <label for="playlist-cover">Cover URL</label>
+              <input id="playlist-cover" name="cover" type="url" placeholder="https://..." />
+            </div>
+            <div class="form-row">
+              <label for="playlist-notes">Notes</label>
+              <textarea id="playlist-notes" name="notes" rows="2" placeholder="Describe this playlist"></textarea>
+            </div>
+            <button type="submit">Create playlist</button>
+          </form>
+        </section>
+
+        <div id="playlist-list" class="card-grid"></div>
+      </section>
+
+      <section id="import-view" class="view">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Import</p>
+            <h2>Add audio from files or YouTube.</h2>
+          </div>
+        </div>
+
+        <div class="import-grid">
+          <section class="import-card">
+            <h3>Upload audio</h3>
+            <form id="audio-upload-form" class="stack-form">
+              <div class="form-row">
+                <label for="audio-file">Audio file</label>
+                <input id="audio-file" name="audio" type="file" accept="audio/*" required />
+              </div>
+              <button type="submit">Upload audio</button>
+              <div id="audio-progress-wrap" class="progress-wrap hidden" aria-hidden="true">
+                <div class="progress-label-row">
+                  <span>Upload progress</span>
+                  <span id="audio-progress-text">0%</span>
+                </div>
+                <div class="progress-track"><div id="audio-progress-bar" class="progress-bar"></div></div>
+              </div>
+            </form>
+            <p class="hint">A new music unit will be created from your uploaded audio. Edit metadata later in Library.</p>
+          </section>
+
+          <section class="import-card">
+            <h3>Upload video</h3>
+            <form id="video-upload-form" class="stack-form">
+              <div class="form-row">
+                <label for="video-file">Video file</label>
+                <input id="video-file" name="video" type="file" accept="video/*" required />
+              </div>
+              <button type="submit">Upload video</button>
+              <div id="video-progress-wrap" class="progress-wrap hidden" aria-hidden="true">
+                <div class="progress-label-row">
+                  <span>Video import progress</span>
+                  <span id="video-progress-text">0%</span>
+                </div>
+                <div class="progress-track"><div id="video-progress-bar" class="progress-bar"></div></div>
+              </div>
+            </form>
+            <p class="hint">The uploaded video is converted to audio and saved as a new music unit. The name defaults to your file name.</p>
+          </section>
+
+          <section class="import-card">
+            <h3>Import from YouTube</h3>
+            <form id="youtube-import-form" class="stack-form">
+              <div class="form-row">
+                <label for="youtube-url">YouTube URL</label>
+                <input id="youtube-url" name="url" type="url" placeholder="https://www.youtube.com/watch?v=..." required />
+              </div>
+              <button type="submit">Import from YouTube</button>
+              <div id="youtube-progress-wrap" class="progress-wrap hidden" aria-hidden="true">
+                <div class="progress-label-row">
+                  <span>Import progress</span>
+                  <span id="youtube-progress-text">0%</span>
+                </div>
+                <div class="progress-track"><div id="youtube-progress-bar" class="progress-bar"></div></div>
+              </div>
+            </form>
+            <p class="hint">The imported music unit will use the video title, author, thumbnail, and description when available.</p>
+          </section>
+        </div>
+      </section>
+
+      <section id="settings-view" class="view">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Settings</p>
+            <h2>Theme and library controls</h2>
+          </div>
+        </div>
+
+        <section class="panel settings-panel">
+          <div class="form-row">
+            <label for="theme-select">Theme</label>
+            <select id="theme-select">
+              <option value="theme-blue">Light (white and blue)</option>
+              <option value="theme-dark">Dark (black and dark green)</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <p>Clear Data</p>
+            <button id="clear-data-button" class="secondary danger" type="button">Clear all library data</button>
+          </div>
+          <p class="hint">Clearing data removes saved tracks, audio files, and playlists from this application.</p>
+        </section>
+      </section>
+
+      <template id="track-card-template">
+        <article class="track-card">
+          <div class="track-top">
+            <div class="cover-block">
+              <div class="cover-art"></div>
+            </div>
+            <div class="track-summary">
+              <p class="track-name"></p>
+              <p class="track-author muted"></p>
+              <p class="track-source muted"></p>
+            </div>
+            <button type="button" class="toggle-button secondary">Details</button>
+          </div>
+          <div class="track-details hidden">
+            <div class="detail-row">
+              <label>Name</label>
+              <input class="field-name" type="text" />
+            </div>
+            <div class="detail-row">
+              <label>Author</label>
+              <input class="field-author" type="text" />
+            </div>
+            <div class="detail-row">
+              <label>Cover URL</label>
+              <input class="field-cover" type="url" placeholder="https://..." />
+            </div>
+            <div class="detail-row">
+              <label>Publish date</label>
+              <input class="field-date" type="text" placeholder="YYYY-MM-DD" />
+            </div>
+            <div class="detail-row">
+              <label>Notes</label>
+              <textarea class="field-notes" rows="3" placeholder="Use this to describe the song."></textarea>
+            </div>
+            <div class="detail-row range-row">
+              <label>Relative volume</label>
+              <input class="field-volume" type="range" min="0.2" max="2.0" step="0.05" />
+              <span class="volume-value">1.0</span>
+            </div>
+            <div class="track-actions">
+              <button type="button" class="save-track secondary">Save</button>
+              <button type="button" class="delete-track danger">Delete</button>
+              <button type="button" class="play-track">Play</button>
+            </div>
+            <div class="playlist-row">
+              <label>Add to playlist</label>
+              <div class="playlist-add-row">
+                <select class="playlist-select"></select>
+                <button type="button" class="add-to-playlist secondary">Add</button>
+              </div>
+            </div>
+          </div>
+        </article>
+      </template>
+
+      <template id="playlist-card-template">
+        <article class="playlist-card">
+          <div class="playlist-top">
+            <div class="cover-block small">
+              <div class="cover-art"></div>
+            </div>
+            <div>
+              <p class="playlist-name"></p>
+              <p class="playlist-notes muted"></p>
+            </div>
+            <button type="button" class="toggle-button secondary">Details</button>
+          </div>
+          <div class="playlist-details hidden">
+            <div class="detail-row">
+              <label>Name</label>
+              <input class="playlist-name-field" type="text" />
+            </div>
+            <div class="detail-row">
+              <label>Cover URL</label>
+              <input class="playlist-cover-field" type="url" placeholder="https://..." />
+            </div>
+            <div class="detail-row">
+              <label>Notes</label>
+              <textarea class="playlist-notes-field" rows="3"></textarea>
+            </div>
+            <div class="track-list"></div>
+            <div class="playlist-actions">
+              <button type="button" class="save-playlist secondary">Save</button>
+              <button type="button" class="delete-playlist danger">Delete</button>
+            </div>
+            <div class="playlist-add-row">
+              <select class="playlist-track-select"></select>
+              <button type="button" class="add-track secondary">Add track</button>
+            </div>
+          </div>
+        </article>
+      </template>
+
+      <section id="bottom-player" class="bottom-player hidden" aria-label="Now playing">
+        <div class="now-playing">
+          <div class="cover-block small">
+            <div id="bottom-player-cover" class="cover-art"></div>
+          </div>
+          <div class="track-meta">
+            <p id="player-label">Select a track to play.</p>
+            <p id="player-context" class="muted"></p>
+          </div>
+        </div>
+        <div class="bottom-controls">
+          <div class="player-controls">
+            <button id="prev-button" type="button" class="icon-button secondary" aria-label="Previous track">⏮</button>
+            <button id="play-pause-button" type="button" class="icon-button" aria-label="Play or pause">▶</button>
+            <button id="next-button" type="button" class="icon-button secondary" aria-label="Next track">⏭</button>
+          </div>
+          <div class="timeline-row">
+            <span id="time-current" class="time-text">0:00</span>
+            <input id="timeline-slider" type="range" min="0" max="100" step="0.1" value="0" aria-label="Track timeline" />
+            <span id="time-total" class="time-text">0:00</span>
+          </div>
+        </div>
+        <div class="shuffle-row">
+          <span>Playback mode</span>
+          <div class="mode-group">
+            <button type="button" class="mode-button active" data-mode="order">Order</button>
+            <button type="button" class="mode-button" data-mode="shuffle">Random</button>
+            <button type="button" class="mode-button" data-mode="repeat">Repeat</button>
+          </div>
+        </div>
+      </section>
+      <audio id="global-audio" preload="metadata"></audio>
+      <script src="/app.js" defer></script>
+    </main>
+  </body>
+</html>

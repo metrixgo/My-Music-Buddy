@@ -1,0 +1,654 @@
+/* Theme and global settings */
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap");
+
+:root {
+  --bg: #ffffff;
+  --bg-alt: #edf4ff;
+  --surface: rgba(255, 255, 255, 0.9);
+  --surface-strong: rgba(255, 255, 255, 0.98);
+  --text: #0f233e;
+  --muted: #516d90;
+  --border: rgba(63, 128, 242, 0.2);
+  --brand: #2f7ef7;
+  --brand-deep: #1f5fc9;
+  --accent: #5ba6ff;
+  --danger: #ef4444;
+  --shadow: 0 22px 58px rgba(28, 86, 174, 0.16);
+  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+body.theme-dark {
+  --bg: #020202;
+  --bg-alt: #0b1a10;
+  --surface: rgba(10, 19, 12, 0.86);
+  --surface-strong: rgba(13, 26, 16, 0.95);
+  --text: #e8f5ea;
+  --muted: #9ec9a8;
+  --border: rgba(63, 131, 83, 0.34);
+  --brand: #2f9e44;
+  --brand-deep: #1f7a33;
+  --accent: #78d18d;
+  --shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Manrope", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 12% 8%, color-mix(in srgb, var(--brand) 20%, transparent), transparent 36%),
+    radial-gradient(circle at 88% 0%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 30%),
+    linear-gradient(165deg, var(--bg) 0%, var(--bg-alt) 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(4px);
+  z-index: 0;
+}
+
+body::before {
+  width: 380px;
+  height: 380px;
+  left: -130px;
+  top: 12vh;
+  background: radial-gradient(circle, color-mix(in srgb, var(--brand) 22%, transparent) 0%, transparent 68%);
+}
+
+body::after {
+  width: 440px;
+  height: 440px;
+  right: -160px;
+  bottom: 6vh;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 20%, transparent) 0%, transparent 70%);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 18px;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--brand), var(--brand-deep));
+  color: white;
+  box-shadow: 0 10px 24px rgba(79, 123, 255, 0.28);
+  transition: transform 150ms ease, opacity 150ms ease, box-shadow 150ms ease, filter 150ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  filter: saturate(1.08);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.secondary {
+  background: var(--surface-strong);
+  color: var(--brand-deep);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+input[type="text"],
+input[type="url"],
+input[type="file"],
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: var(--surface-strong);
+  color: var(--text);
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+input[type="text"]:focus,
+input[type="url"]:focus,
+input[type="file"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: color-mix(in srgb, var(--brand) 62%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 18%, transparent);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.app-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0 170px;
+  position: relative;
+  z-index: 1;
+}
+
+.app-header {
+  display: grid;
+  gap: 24px;
+  padding: 30px 28px;
+  border-radius: 30px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+  position: relative;
+  overflow: hidden;
+}
+
+.app-header::after {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  right: -66px;
+  top: -106px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--brand) 28%, transparent), transparent 74%);
+  pointer-events: none;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--brand-deep);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 3vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.subhead {
+  margin: 0;
+  color: var(--muted);
+  max-width: 48rem;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tab-button {
+  background: color-mix(in srgb, var(--surface-strong) 82%, transparent);
+  color: var(--text);
+  padding: 12px 18px;
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.tab-button.active {
+  background: linear-gradient(135deg, var(--brand), var(--brand-deep));
+  color: white;
+  border-color: transparent;
+}
+
+.status {
+  min-height: 24px;
+  margin: 18px 0;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.status.error {
+  color: #dc2626;
+}
+
+.status.success {
+  color: #15803d;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  margin: 0;
+}
+
+.card-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.player-card,
+.panel,
+.import-card,
+.settings-panel,
+.track-card,
+.playlist-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  padding: 22px;
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+}
+
+.player-card::before,
+.track-card::before,
+.playlist-card::before {
+  content: "";
+  position: absolute;
+  left: -38%;
+  top: -82px;
+  width: 76%;
+  height: 120px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--brand) 14%, transparent), transparent);
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+
+.player-card {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.player-summary {
+  display: grid;
+  gap: 8px;
+}
+
+.player-summary p {
+  margin: 0;
+}
+
+.player-controls,
+.mode-group,
+.playlist-actions,
+.playlist-add-row,
+.track-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.player-controls {
+  align-items: center;
+}
+
+.shuffle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.shuffle-row span {
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.mode-button {
+  background: var(--surface-strong);
+  color: var(--brand-deep);
+  border: 1px solid var(--border);
+}
+
+.mode-button.active {
+  background: linear-gradient(135deg, var(--brand), var(--brand-deep));
+  color: white;
+  border-color: transparent;
+}
+
+.import-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.import-card {
+  display: grid;
+  gap: 16px;
+}
+
+.stack-form {
+  display: grid;
+  gap: 14px;
+}
+
+.form-row {
+  display: grid;
+  gap: 8px;
+}
+
+.cover-block {
+  min-width: 110px;
+  min-height: 110px;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--accent) 38%, transparent), transparent 45%),
+    linear-gradient(135deg, color-mix(in srgb, var(--brand) 20%, transparent), color-mix(in srgb, var(--brand-deep) 20%, transparent));
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--brand) 20%, transparent);
+}
+
+.cover-block.small {
+  min-width: 84px;
+  min-height: 84px;
+}
+
+.cover-art {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.78);
+  background-size: cover;
+  background-position: center;
+  box-shadow: var(--card-highlight);
+}
+
+.track-card,
+.playlist-card {
+  display: grid;
+  gap: 18px;
+}
+
+.track-top,
+.playlist-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.track-summary,
+.playlist-summary {
+  display: grid;
+  gap: 8px;
+}
+
+.track-name,
+.playlist-name {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.toggle-button {
+  flex-shrink: 0;
+}
+
+.track-details,
+.playlist-details {
+  display: grid;
+  gap: 14px;
+}
+
+.track-details.hidden,
+.playlist-details.hidden {
+  display: none;
+}
+
+.progress-wrap {
+  display: grid;
+  gap: 8px;
+}
+
+.progress-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.progress-track {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--brand) 18%, transparent);
+  overflow: hidden;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand), var(--accent));
+  transition: width 180ms ease;
+}
+
+.bottom-player {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 12px;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(300px, 1.5fr) auto;
+  gap: 18px;
+  align-items: center;
+  padding: 14px 18px;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--surface) 84%, transparent);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+
+.now-playing {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.track-meta {
+  min-width: 0;
+}
+
+.track-meta p {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bottom-controls {
+  display: grid;
+  gap: 8px;
+}
+
+.icon-button {
+  min-width: 46px;
+  min-height: 42px;
+  font-size: 1.05rem;
+  padding: 8px 10px;
+}
+
+.timeline-row {
+  display: grid;
+  grid-template-columns: 40px minmax(100px, 1fr) 40px;
+  align-items: center;
+  gap: 8px;
+}
+
+#timeline-slider {
+  width: 100%;
+  accent-color: var(--brand);
+  cursor: pointer;
+}
+
+.time-text {
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.detail-row {
+  display: grid;
+  gap: 8px;
+}
+
+.range-row {
+  align-items: center;
+  grid-template-columns: 1fr auto;
+}
+
+.volume-value {
+  min-width: 44px;
+  text-align: right;
+  color: var(--brand-deep);
+  font-weight: 700;
+}
+
+.track-actions,
+.playlist-actions,
+.playlist-add-row {
+  align-items: center;
+}
+
+.track-actions button,
+.playlist-actions button,
+.playlist-add-row button {
+  min-width: 100px;
+}
+
+.playlist-add-row {
+  width: 100%;
+}
+
+.playlist-add-row select {
+  flex: 1;
+}
+
+.playlist-add-row button {
+  flex-shrink: 0;
+}
+
+.track-list {
+  display: grid;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.playlist-track-item,
+.empty-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface-strong) 86%, transparent);
+  border: 1px solid var(--border);
+}
+
+.empty-state {
+  padding: 28px;
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
+  border: 1px dashed var(--border);
+  color: var(--muted);
+  text-align: center;
+  font-weight: 600;
+}
+
+@media (max-width: 980px) {
+  .import-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    width: min(100% - 24px, 1180px);
+    padding: 20px 0 40px;
+  }
+
+  .section-header,
+  .track-top,
+  .playlist-top,
+  .player-card,
+  .mode-group,
+  .track-actions,
+  .playlist-actions,
+  .playlist-add-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .track-top,
+  .playlist-top {
+    align-items: flex-start;
+  }
+
+  .bottom-player {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    padding: 12px;
+  }
+
+  .timeline-row {
+    grid-template-columns: 34px minmax(80px, 1fr) 34px;
+  }
+}

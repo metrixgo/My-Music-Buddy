@@ -1,0 +1,10 @@
+{
+  "name": "mymusicbuddy",
+  "version": "1.0.0",
+  "description": "A small web app for importing audio from YouTube links and playing saved tracks.",
+  "main": "app.py",
+  "scripts": {
+    "start": "python app.py"
+  },
+  "license": "UNLICENSED"
+}

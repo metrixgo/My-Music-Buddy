@@ -1,0 +1,8 @@
+node_modules/
+storage/audio/*
+!storage/audio/.gitkeep
+storage/uploads/*
+!storage/uploads/.gitkeep
+storage/covers/*
+!storage/covers/.gitkeep
+storage/library.json
