@@ -25,7 +25,7 @@ MyMusicBuddy is an online web-based music platform where users can freely upload
 
 Download code zip and extract them into a folder. Open a terminal and navigate to the folder. Type
 
-'npm start'
+`npm start`
 
 to start the server and go to your local host to upload your music!
 
