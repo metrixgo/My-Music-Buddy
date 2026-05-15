@@ -20,6 +20,7 @@ MyMusicBuddy is an online web-based music platform where users can freely upload
 - Python 3+ for the app
 - `yt-dlp` for extracting from Youtube
 - `imageio-ffmpeg` for converting video to audio
+- `flask` for python web
 
 ## How to use
 
