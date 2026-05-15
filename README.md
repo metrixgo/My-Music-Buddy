@@ -1,35 +1,33 @@
 # MyMusicBuddy
 
-MyMusicBuddy is a tiny web app where a user pastes a YouTube link, the server extracts audio only, stores it locally, and adds it to a playable music library.
+## DISCLAIMER
+
+You should only use this web app to download copyright-free audio. Any copyright violation is solely the responsibility of the user.
+
+## Introduction
+
+MyMusicBuddy is an online web-based music platform where users can freely upload their music. They can upload audio, upload video and then convert them to audio, or paste a Youtube link to extract the audio from the video.
 
 ## What it does
 
-- Accepts a YouTube URL in the browser
+- Users have three options to upload an audio, either uploading an audio directly, a video, or a Youtube link
 - Uses the `yt_dlp` Python library directly
-- Stores the saved audio file locally
-- Saves track metadata in `storage/library.json`
-- Lets users play saved tracks from the browser
+- Stores the saved audio file locally as well as the metadata
+- Lets users customize playlists and play saved tracks from the browser
 
 ## Requirements
 
-- Python 3+
-- `yt-dlp` installed for the Python environment running on the machine
-- `imageio-ffmpeg` installed (provides `ffmpeg` for video-to-audio conversion)
+- Python 3+ for the app
+- `yt-dlp` for extracting from Youtube
+- `imageio-ffmpeg` for converting video to audio
 
-Install `yt-dlp` if needed:
+## How to use
 
-```bash
-python -m pip install --user yt-dlp
-python -m pip install --user imageio-ffmpeg
-```
+Download code zip and extract them into a folder. Open a terminal and navigate to the folder. Type
 
-## Run it
+`npm start`
 
-```bash
-python app.py
-```
-
-Then open [http://localhost:3000](http://localhost:3000).
+to start the server and go to your local host to upload your music!
 
 ## Storage
 
